@@ -2,7 +2,7 @@
 
 int main(void) {
     int numero = 0;
-    int factorial = 1; // Inicializar el factorial como 1
+    int factorial = 1;
 
     printf("Elige un numero NO negativo: \n");
     scanf("%d", &numero);
@@ -13,7 +13,7 @@ int main(void) {
     }
 
     for (int i = 1; i <= numero; i++) {
-        factorial *= i; // Multiplicar por i en lugar de sumar
+        factorial *= i;
     }
 
     printf("El factorial de %d es: %d\n", numero, factorial);
