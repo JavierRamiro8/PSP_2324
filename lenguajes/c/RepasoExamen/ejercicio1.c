@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
 #define LENGTHARRAY 3
 int main(int argc, char const *argv[])
 {
