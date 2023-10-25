@@ -89,7 +89,7 @@ int main(int argc, char const *argv[])
         }
         for (int i = 0; i < LENGTHARRAY; i++)
         {
-            fprintf(salida,"%d\n",resultadoOrdenado[i]);
+            fprintf(salida, "%d\n", resultadoOrdenado[i]);
         }
         fclose(salida);
     }

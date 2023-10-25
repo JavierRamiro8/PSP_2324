@@ -4,45 +4,50 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main(int argc, char const *argv[]) {
-
+int main(int argc, char const *argv[])
+{
+    if (argc != 4)
+    {
+        printf("Valores Incompletos\n");
+        return 1;
+    }
     int numero1 = atoi(argv[1]);
     char simbolo = argv[2][0];
     int numero2 = atoi(argv[3]);
-    int resultado = 0;
     int accion[2];
+    int resultado = 0;
 
     pid_t hijo = fork();
+    pipe(accion);
 
-    if (hijo == 0) {
-                close(accion[0]);  // Cerramos el descriptor de lectura en el proceso padre
+    if (hijo == 0)
+    {
+        close(accion[0]); // Cerramos lectura en el proceso hijo
         write(accion[1], &numero1, sizeof(numero1));
         write(accion[1], &numero2, sizeof(numero2));
         write(accion[1], &simbolo, sizeof(simbolo));
-        close(accion[1]);  // Cerramos el descriptor de escritura en el proceso padre
-        wait(NULL);
-        }else{
-        close(accion[1]);  // Cerramos el descriptor de escritura en el proceso hijo
+        close(accion[1]); // Cerramos escritura en el proceso hijo
+        exit(0);
+    }
+    else
+    {
+        close(accion[1]); // Cerramos escritura en el proceso padre
         read(accion[0], &numero1, sizeof(numero1));
         read(accion[0], &numero2, sizeof(numero2));
         read(accion[0], &simbolo, sizeof(simbolo));
-
-        switch (simbolo) {
-            case '+':
-                resultado = numero1 + numero2;
-                break;
-            case '-':
-                resultado = numero1 - numero2;
-                break;
-            default:
-            printf("No ha pasado nada");
-                break;
+        char sumar = '+';
+        if (simbolo == '+')
+        {
+            resultado = numero1 + numero2;
         }
-        read(accion[0], &resultado, sizeof(resultado));
+        else
+        {
+            resultado = numero1 - numero2;
+        }
         close(accion[0]);
+        wait(NULL);
+        printf("%d %c %d es igual a %d\n", numero1, simbolo, numero2, resultado);
         exit(0);
     }
-        printf("%d %c %d es igual a %d\n", numero1, simbolo, numero2, resultado);
-
     return 0;
 }

@@ -6,14 +6,17 @@
 #include <sys/wait.h>
 
 // Función de manejador de señales
-void manejadorDeSeñales(int signum) {
-    if (signum == SIGUSR1) {
+void manejadorDeSeñales(int signum)
+{
+    if (signum == SIGUSR1)
+    {
         printf("Señal SIGUSR1 recibida por el hijo. Terminando el proceso hijo.\n");
         exit(0);
     }
 }
 
-int main() {
+int main()
+{
     pid_t child_pid;
     int status;
 
@@ -22,18 +25,23 @@ int main() {
 
     child_pid = fork();
 
-    if (child_pid == -1) {
+    if (child_pid == -1)
+    {
         perror("Error al crear el proceso hijo");
         exit(1);
     }
 
-    if (child_pid == 0) {
+    if (child_pid == 0)
+    {
         // Proceso hijo
         printf("Proceso hijo creado (PID %d).\n", getpid());
-        while (1) {
+        while (1)
+        {
             // El proceso hijo espera señales continuamente
         }
-    } else {
+    }
+    else
+    {
         // Proceso padre
         printf("Proceso padre (PID %d) creó un proceso hijo (PID %d).\n", getpid(), child_pid);
 
@@ -41,7 +49,8 @@ int main() {
         sleep(2);
 
         // Enviar una señal SIGUSR1 al proceso hijo
-        if (kill(child_pid, SIGUSR1) == -1) {
+        if (kill(child_pid, SIGUSR1) == -1)
+        {
             perror("Error al enviar la señal al hijo");
             exit(1);
         }
