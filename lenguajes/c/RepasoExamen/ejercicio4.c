@@ -7,20 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        printf("Uso: %s <número de hijos>\n", argv[0]);
-        return 1;
-    }
 
     int numHijos = atoi(argv[1]);
-
-    if (numHijos <= 0)
-    {
-        printf("El número de hijos debe ser un entero positivo.\n");
-        return 1;
-    }
-
     pid_t hijos[numHijos];
 
     // Crear n hijos
