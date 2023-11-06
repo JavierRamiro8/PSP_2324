@@ -108,8 +108,6 @@ int main(int argc, char const *argv[])
     {
         printf("Soy el hijo 2 y este es mi número impar: %d\n", numerosImpares[i]);
     }
-
-    // Esperar a que los hijos terminen
     wait(NULL);
     wait(NULL);
 

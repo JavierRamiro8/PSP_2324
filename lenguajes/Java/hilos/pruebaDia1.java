@@ -1,4 +1,4 @@
-package lenguajes.Java.hilos;
+package Java.hilos;
 
 import java.io.IOException;
 public class pruebaDia1 {

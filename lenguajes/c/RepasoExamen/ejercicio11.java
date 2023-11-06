@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ejercicio9 {
+public class ejercicio11 {
 
     public class ListarIPs {
         public static void main(String[] args) throws InterruptedException, IOException {
-            String comando = "ifconfig";
+            String comando = "ipconfig";
             ProcessBuilder processBuilder = new ProcessBuilder(comando);
 
             Process proceso = processBuilder.start();

@@ -1,4 +1,4 @@
-package lenguajes.Java.hilos;
+package Java.hilos;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,8 +44,3 @@ public class comprimir {
         }
     }
 }
-
-
-
-
-

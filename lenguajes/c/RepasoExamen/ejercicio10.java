@@ -8,7 +8,7 @@ public class ejercicio10 {
 
     public class ListarIPs {
         public static void main(String[] args) throws InterruptedException, IOException {
-            String comando = "ipconfig";
+            String comando = "ifconfig";
             ProcessBuilder processBuilder = new ProcessBuilder(comando);
 
             Process proceso = processBuilder.start();
