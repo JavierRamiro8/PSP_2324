@@ -15,8 +15,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/github/PSP_2324/lenguajes/c/1",
-      "program": "c:/github/PSP_2324/lenguajes/c/1/build/Debug/outDebug",
+      "cwd": "c:/github/PSP_2324/lenguajes/c/RepasoExamen",
+      "program": "c:/github/PSP_2324/lenguajes/c/RepasoExamen/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
