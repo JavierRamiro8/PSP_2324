@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <math.h>
+#include <time.h>
 #define NUMEROMAXGEN 20
 #define NUMEROMAXRAND 100
 #define DOS 2
@@ -15,19 +16,33 @@ int main(int argc, char const *argv[])
 {
     pid_t hijoPar;
     pid_t hijoImpar;
-    int numerosAleatorios[NUMEROMAXGEN];
+    int numerosAleatorios;
     int envioHijoPar[DOS];
     int envioHijoImpar[DOS];
     pipe(envioHijoPar);
     pipe(envioHijoImpar);
     srand(time(NULL));
+    int par[NUMEROMAXGEN];
+    int impar[NUMEROMAXGEN];
+    int contadorPar=0;
+    int contadorImpar=0;
     for (int i = 0; i < NUMEROMAXGEN; i++)
     {
-        numerosAleatorios[i] = rand() % NUMEROMAXRAND;
+        numerosAleatorios = rand() % NUMEROMAXRAND;
+        if (numerosAleatorios % DOS == CERO)
+        {
+            par[contadorPar] = numerosAleatorios;
+            contadorPar++;
+        }
+        else if (numerosAleatorios % DOS == UNO)
+        {
+            impar[contadorImpar] = numerosAleatorios;
+            contadorImpar++;
+        }
     }
 
-    write(envioHijoPar[1], numerosAleatorios, sizeof(numerosAleatorios));
-    write(envioHijoImpar[1], numerosAleatorios, sizeof(numerosAleatorios));
+    write(envioHijoPar[1], par, sizeof(par));
+    write(envioHijoImpar[1], impar, sizeof(impar));
 
     hijoPar = fork();
     if (hijoPar == 0)
@@ -38,14 +53,14 @@ int main(int argc, char const *argv[])
         read(envioHijoPar[0], arrayNumerosRecibidos, sizeof(arrayNumerosRecibidos));
         for (int i = 0; i < NUMEROMAXGEN; i++)
         {
-            if (arrayNumerosRecibidos[i] % DOS == CERO)
+            if (arrayNumerosRecibidos[i] != 0)
             {
-                printf("Soy el hijo 1, he recibido: %d\n", arrayNumerosRecibidos[i]);
-                contador++;
+                printf("soy el hijo 1, he recibido:%d\n", arrayNumerosRecibidos[i]);
             }
         }
         exit(EXIT_SUCCESS);
     }
+    
     hijoImpar = fork();
     if (hijoImpar == 0)
     {
@@ -57,11 +72,14 @@ int main(int argc, char const *argv[])
         {
             if (arrayNumerosRecibidos[i] % DOS == UNO)
             {
-                printf("Soy el hijo 2, he recibido: %d\n", arrayNumerosRecibidos[i]);
-                contador++;
+                printf("Soy el hijo 2, he recibido:%d\n", arrayNumerosRecibidos[i]);
             }
         }
         exit(EXIT_SUCCESS);
+    }
+    for (int i = 0; i < DOS; i++)
+    {
+        wait(NULL);
     }
 
     return 0;

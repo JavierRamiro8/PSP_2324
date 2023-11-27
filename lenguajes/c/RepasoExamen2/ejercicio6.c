@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
     int envioNumerosArray[DOS];
     int envioSimbolo[DOS];
     pipe(envioNumerosArray);
-    pipe(&envioSimbolo);
+    pipe(envioSimbolo);
     write(envioSimbolo[1], &simbolo, sizeof(simbolo));
     write(envioNumerosArray[1], arrayNumerosArg, sizeof(arrayNumerosArg));
 
