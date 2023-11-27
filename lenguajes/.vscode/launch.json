@@ -3,5 +3,20 @@
     // Mantenga el puntero para ver las descripciones de los existentes atributos.
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+        {
+            "type": "java",
+            "name": "mainCanciones",
+            "request": "launch",
+            "mainClass": "Java.e1.ejercicio3.mainCanciones",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
+            "name": "mainEjercicio2",
+            "request": "launch",
+            "mainClass": "Java.e1.ejercicio2.mainEjercicio2",
+            "projectName": "lenguajes_9b261757"
+        }
+    ]
 }

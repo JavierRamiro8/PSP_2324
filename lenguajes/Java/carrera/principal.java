@@ -32,7 +32,7 @@ public class principal {
             corredores[i] = new corredor(KMRECORRERMAX, DORSAL + i);
             corredorThread[i] = new Thread(corredores[i]);
         }
-        for(int i=0;i<corredores.length;i++){
+        for (int i = 0; i < corredores.length; i++) {
             corredorThread[i].start();
         }
 
