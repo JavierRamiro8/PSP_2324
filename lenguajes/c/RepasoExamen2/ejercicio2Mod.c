@@ -65,6 +65,15 @@ int main(int argc, char const *argv[])
         }
     }
 
+    for (; contadorPar < NUMEROMAXGEN; contadorPar++)
+    {
+        par[contadorPar] = 0;
+    }
+    for (; contadorImpar < NUMEROMAXGEN; contadorImpar++)
+    {
+        impar[contadorImpar] = 0;
+    }
+
     write(envioHijoPar[1], par, sizeof(par));
     write(envioHijoImpar[1], impar, sizeof(impar));
 

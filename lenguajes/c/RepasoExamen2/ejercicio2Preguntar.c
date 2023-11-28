@@ -9,7 +9,7 @@
 #include <time.h>
 #define NUMEROMAXGEN 20
 #define NUMEROMAXRAND 100
-#define DOS 2
+#define DOS 2 /*en vez de DOS se pondria CLASIFICADOR ya que lo repito*/
 #define CERO 0
 #define UNO 1
 
@@ -53,12 +53,12 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < NUMEROMAXGEN; i++)
     {
         numerosAleatorios = rand() % NUMEROMAXRAND;
-        if (numerosAleatorios % DOS == CERO)
+        if (numerosAleatorios % DOS == CERO /*se podria poner 0*/)
         {
             par[contadorPar] = numerosAleatorios;
             contadorPar++;
         }
-        if (numerosAleatorios % DOS == UNO)
+        iºf(numerosAleatorios % DOS == UNO /*se podria poner 1*/)
         {
             impar[contadorImpar] = numerosAleatorios;
             contadorImpar++;
@@ -130,7 +130,6 @@ int main(int argc, char const *argv[])
     {
         wait(NULL);
     }
-
     read(envioPadrePar[0], &resultadoRecibidoSumaPar, sizeof(resultadoRecibidoSumaPar));
     read(envioPadreImpar[0], &resultadoRecibidoSumaImpar, sizeof(resultadoRecibidoSumaImpar));
 
