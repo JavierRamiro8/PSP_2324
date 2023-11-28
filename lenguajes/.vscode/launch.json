@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Principal",
+            "request": "launch",
+            "mainClass": "Java.carrera.Principal",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
+            "name": "mainBanco",
+            "request": "launch",
+            "mainClass": "Java.banco.mainBanco",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
+            "name": "principal",
+            "request": "launch",
+            "mainClass": "Java.carrera.principal",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
+            "name": "mainContador",
+            "request": "launch",
+            "mainClass": "Java.Contadores.mainContador",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
             "name": "mainCanciones",
             "request": "launch",
             "mainClass": "Java.e1.ejercicio3.mainCanciones",
