@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainCohete",
+            "request": "launch",
+            "mainClass": "examen.ejercicio4.MainCohete",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
             "name": "Principal",
             "request": "launch",
             "mainClass": "Java.carrera.Principal",
