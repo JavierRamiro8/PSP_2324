@@ -12,12 +12,13 @@ void manejadorSeñal(int signal)
 {
     if (signal == SIGUSR1)
     {
-        printf("me han matado");
+        printf("me han matado\n");
     }
     else if (signal == SIGINT)
     {
-        printf("me han rematado");
+        printf("me han rematado\n");
     }
+    exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char const *argv[])
