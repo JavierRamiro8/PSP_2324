@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ServerUDP",
+            "request": "launch",
+            "mainClass": "ServerUDP",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
+            "name": "ClienteUDP",
+            "request": "launch",
+            "mainClass": "ClienteUDP",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
             "name": "MainCohete",
             "request": "launch",
             "mainClass": "examen.ejercicio4.MainCohete",
