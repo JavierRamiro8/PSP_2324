@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainAscensores",
+            "request": "launch",
+            "mainClass": "Ascensores.MainAscensores",
+            "projectName": "lenguajes_9b261757"
+        },
+        {
+            "type": "java",
             "name": "ServerUDP",
             "request": "launch",
             "mainClass": "ServerUDP",

@@ -87,18 +87,25 @@ int main(int argc, char const *argv[])
         signal(SIGUSR1, manejadorDeSenales);
         signal(SIGUSR2, manejadorDeSenales);
         pause();
-    }else if((hijo2=fork())==0){
+        pause();
+    }
+    else if ((hijo2 = fork()) == 0)
+    {
         printf("soy el hijo 2, veremos a ver cual es mi pid\n");
         signal(SIGUSR1, manejadorDeSenales);
         signal(SIGUSR2, manejadorDeSenales);
+        pause();
         pause();
     }
     else
     {
         sleep(1);
         kill(hijo1, SIGUSR1);
+        sleep(1);
         kill(hijo1, SIGUSR2);
+        sleep(1);
         kill(hijo2, SIGUSR1);
+        sleep(1);
         kill(hijo2, SIGUSR2);
         wait(NULL);
         wait(NULL);
