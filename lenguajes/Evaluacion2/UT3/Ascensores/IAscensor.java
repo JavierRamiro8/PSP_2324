@@ -1,22 +1,36 @@
 package Ascensores;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
 public class IAscensor implements Runnable {
     private int id;
     private String ip;
     private int puerto;
-    private int contSubir;
-    private int contBajar;
 
-    void config() {
-        System.out.println(id + " " + ip + " " + puerto);
-    }
-
+    @Override
     public void run() {
-        System.out.println("COD_ASCESOR: " + id + " Piso: " + "0" + " Direccion: " + "0");
-    }
+        try (DatagramSocket socket = new DatagramSocket()) {
+            while (true) {
+                String mensaje = "COD_ASCENSOR: " + id + " Piso: 0 Direccion: 0\n";
 
-    synchronized void subir() {
-        contSubir++;
+                byte[] mensajeBytes = mensaje.getBytes();
+
+                InetAddress direccionDestino = InetAddress.getByName(ip);
+                DatagramPacket packet = new DatagramPacket(mensajeBytes, mensajeBytes.length, direccionDestino, puerto);
+
+                socket.send(packet);
+
+                long tiempoEspera = 100;
+                Thread.sleep(tiempoEspera);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public IAscensor(int id, String ip, int puerto) {
@@ -25,8 +39,10 @@ public class IAscensor implements Runnable {
         this.puerto = puerto;
     }
 
+    synchronized void subir() {
+    }
+
     synchronized void bajar() {
-        contBajar++;
     }
 
     synchronized void getPlanta() {

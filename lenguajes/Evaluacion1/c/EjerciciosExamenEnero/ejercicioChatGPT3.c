@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
         int numero=0;
         printf("ponme un numero y haber si lo aciertas, tienes %d intentos\n", MAXROUND);
         scanf("%d", &numero);
-        for (int i = 1; i <= MAXROUND; i++)
+        for (int i = 1; i < MAXROUND; i++)
         {
             if (numero > numeroRandomRecibido)
             {
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
                 printf("la has clavado");
                 break;
             }
-            if(i==MAXROUND){
+            if(i==MAXROUND-1){
                 printf("Al final no lo has acertado, el numero era %d\n",numeroRandomRecibido);
             }
         }
