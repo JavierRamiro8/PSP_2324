@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#define FLAGNULA '\0'
 
 void ejecutarComandoConFlag(char *comandoIntroducido, char *flagIntroducida)
 {
