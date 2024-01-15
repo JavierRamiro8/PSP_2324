@@ -2,10 +2,8 @@
 #include <string.h>
 #include <openssl/md5.h>
 #include <openssl/evp.h>
-
 #define PRINCIPIOABCEDARIO 'a'
 #define FINALABCEDARIO 'z'
-
 void md5_hash(const char *str, unsigned char *digest)
 {
     EVP_MD_CTX *mdctx;
@@ -23,11 +21,9 @@ void md5_hash(const char *str, unsigned char *digest)
     EVP_MD_CTX_free(mdctx);
 }
 
-int main()
+void functionMD5(const char *target_hash)
 {
-    char target_hash[] = "74437fabd7c8e8fd178ae89acbe446f2";
-
-    char arrayLetras[5] = {0}; // Asegúrate de que haya espacio para el carácter nulo
+    char arrayLetras[5] = {0}; // Espacio para 4 letras más el carácter nulo
     unsigned char hash[MD5_DIGEST_LENGTH];
 
     for (arrayLetras[0] = PRINCIPIOABCEDARIO; arrayLetras[0] <= FINALABCEDARIO; arrayLetras[0]++)
@@ -48,14 +44,23 @@ int main()
                     }
                     if (strcmp(hash_str, target_hash) == 0)
                     {
-                        printf("Texto encontrado: %s\n", arrayLetras);
-                        return 0;
+                        printf("Texto encontrado: %s\n",
+                               arrayLetras);
+                        return;
                     }
                 }
             }
         }
     }
-
     printf("Texto no encontrado.\n");
+}
+
+int main()
+{
+    char cadenaHash[33]; // Espacio para 32 caracteres más el carácter nulo
+    printf("Introduce un hash: ");
+    scanf("%32s", cadenaHash); // Lee hasta 32 caracteres para evitar desbordamiento
+    functionMD5(cadenaHash);
+
     return 0;
 }
