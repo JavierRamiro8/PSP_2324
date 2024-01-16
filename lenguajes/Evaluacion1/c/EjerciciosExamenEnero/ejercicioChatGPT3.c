@@ -12,6 +12,7 @@
 y el hijo usando señales te dira si es mayor, menor o lo has acertado*/
 void manejadorSenialesSIGUSR1(int signal)
 {
+    printf("Intento 12345");
 }
 void manejadorSenialesSIGUSR2(int signal)
 {
