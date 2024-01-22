@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class ServerChatUDPMultiThread {
     private static final int MAX_LENGTH = 65535;
@@ -14,21 +15,22 @@ public class ServerChatUDPMultiThread {
             return;
         }
 
+        String ip = "127.0.0.1";
         int puerto = Integer.parseInt(args[0]);
 
-        try (DatagramSocket dsServer = new DatagramSocket(puerto)) {
-            System.out.println("Servidor iniciado en el puerto " + puerto);
-
-            while (true) {
+        try (DatagramSocket dsServer = new DatagramSocket(puerto, InetAddress.getByName(ip));
+                Scanner sc = new Scanner(System.in)) {
+            // Recibir mensaje del cliente
+            Thread reciboMensaje = new Thread(() -> {
                 DatagramPacket receivePacket = recibirMensaje(dsServer);
-                InetAddress clientAddress = receivePacket.getAddress();
-                int clientPort = receivePacket.getPort();
                 String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
                 System.out.println("Cliente: " + receivedData);
+            });
+            reciboMensaje.start();
 
-                // Crear un hilo para manejar la comunicación con el cliente
-                Thread clientThread = new Thread(new ClientHandler(dsServer, clientAddress, clientPort, receivedData));
-                clientThread.start();
+            while (true) {
+                // Enviar respuesta al cliente
+                enviarMensaje(dsServer, ip, puerto, sc.nextLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,36 +43,12 @@ public class ServerChatUDPMultiThread {
         ds.receive(receivePacket);
         return receivePacket;
     }
-}
 
-class ClientHandler implements Runnable {
-    private DatagramSocket socket;
-    private InetAddress clientAddress;
-    private int clientPort;
-    private String receivedData;
-
-    public ClientHandler(DatagramSocket socket, InetAddress clientAddress, int clientPort, String receivedData) {
-        this.socket = socket;
-        this.clientAddress = clientAddress;
-        this.clientPort = clientPort;
-        this.receivedData = receivedData;
-    }
-
-    @Override
-    public void run() {
-        try {
-            // Realizar el procesamiento específico para este cliente
-            String response = "Recibido: " + receivedData;
-            enviarMensaje(socket, clientAddress, clientPort, response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void enviarMensaje(DatagramSocket ds, InetAddress address, int puerto, String mensaje) throws IOException {
+    private static void enviarMensaje(DatagramSocket ds, InetAddress address, int puerto, String mensaje)
+            throws IOException {
         byte[] mensajeBytes = mensaje.getBytes();
-        DatagramPacket sendPacket = new DatagramPacket(mensajeBytes, mensajeBytes.length, address, puerto);
+        DatagramPacket sendPacket = new DatagramPacket(
+                mensajeBytes, mensajeBytes.length, address, puerto);
         ds.send(sendPacket);
     }
 }
-

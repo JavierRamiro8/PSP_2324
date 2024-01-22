@@ -6,7 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Scanner;
 
-public class ClienteChatUDP {
+public class ClienteChatUDPMonoThread {
     private static final int MAX_LENGTH = 65535;
 
     public static void main(String[] args) {

@@ -33,7 +33,7 @@ public class ClienteChatUDPMultiThread {
                 }
             });
 
-            envioMensaje.start();
+            envioMensaje.run();
 
             // Hilo principal para recibir mensajes
             while (true) {
