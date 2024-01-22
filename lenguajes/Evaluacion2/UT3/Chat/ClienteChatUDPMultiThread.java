@@ -6,7 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Scanner;
 
-public class ServerChatUDPMonoThread {
+public class ClienteChatUDPMultiThread {
     private static final int MAX_LENGTH = 65535;
 
     public static void main(String[] args) {
@@ -18,33 +18,44 @@ public class ServerChatUDPMonoThread {
         String ip = args[0];
         int puerto = Integer.parseInt(args[1]);
 
-        try (DatagramSocket ds = new DatagramSocket();
-             Scanner sc = new Scanner(System.in)) {
+        try (DatagramSocket dsCliente = new DatagramSocket();
+                Scanner sc = new Scanner(System.in)) {
 
+            // Hilo para enviar mensajes
+            Thread envioMensaje = new Thread(() -> {
+                while (true) {
+                    try {
+                        String mensaje = sc.nextLine();
+                        enviarMensaje(dsCliente, ip, puerto, mensaje);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            envioMensaje.start();
+
+            // Hilo principal para recibir mensajes
             while (true) {
-                // Obtener el mensaje del usuario y enviarlo
-                enviarMensaje(ds, ip, puerto, sc.nextLine());
-
-                // Recibir la respuesta del servidor
-                String receivedData = recibirMensaje(ds);
-                System.out.println("Servidor: " + receivedData);
+                recibirMensaje(dsCliente);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void enviarMensaje(DatagramSocket ds, String ip, int puerto, String mensaje) throws IOException {
+    private static void enviarMensaje(DatagramSocket ds, String ip, int puerto, String mensaje)
+            throws IOException {
         byte[] mensajeBytes = mensaje.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(
                 mensajeBytes, mensajeBytes.length, InetAddress.getByName(ip), puerto);
         ds.send(sendPacket);
     }
 
-    private static String recibirMensaje(DatagramSocket ds) throws IOException {
+    private static void recibirMensaje(DatagramSocket ds) throws IOException {
         byte[] receiveBuffer = new byte[MAX_LENGTH];
         DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
         ds.receive(receivePacket);
-        return new String(receivePacket.getData(), 0, receivePacket.getLength());
     }
+
 }
