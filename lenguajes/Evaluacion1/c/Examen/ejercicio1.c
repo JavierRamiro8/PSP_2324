@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
         {
             int numeroAleatorioRecibido;
             read(pipeHijo1[0], &numeroAleatorioRecibido, sizeof(int));
-            if (esPrimo(numeroAleatorioRecibido) == 0)
+            if (esPrimo(numeroAleatorioRecibido) == 1)
             {
                 numeroSumaPrimos = numeroSumaPrimos + numeroAleatorioRecibido;
                 printf("el numero %d es primo\n", numeroAleatorioRecibido);
