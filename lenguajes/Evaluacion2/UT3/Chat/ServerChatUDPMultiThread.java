@@ -19,19 +19,25 @@ public class ServerChatUDPMultiThread {
         int puerto = Integer.parseInt(args[0]);
 
         try (DatagramSocket dsServer = new DatagramSocket(puerto, InetAddress.getByName(ip));
-                Scanner sc = new Scanner(System.in)) {
-            // Recibir mensaje del cliente
-            Thread reciboMensaje = new Thread(() -> {
+             Scanner sc = new Scanner(System.in)) {
+
+            while (true) {
+                // Recibir mensaje del cliente
                 DatagramPacket receivePacket = recibirMensaje(dsServer);
                 String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
                 System.out.println("Cliente: " + receivedData);
-            });
-            reciboMensaje.start();
 
-            while (true) {
-                // Enviar respuesta al cliente
-                enviarMensaje(dsServer, ip, puerto, sc.nextLine());
+                // Enviar respuesta al cliente en un nuevo hilo
+                Thread envioMensaje = new Thread(() -> {
+                    try {
+                        enviarMensaje(dsServer, receivePacket.getAddress(), receivePacket.getPort(), sc.nextLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                envioMensaje.start();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,8 +50,7 @@ public class ServerChatUDPMultiThread {
         return receivePacket;
     }
 
-    private static void enviarMensaje(DatagramSocket ds, InetAddress address, int puerto, String mensaje)
-            throws IOException {
+    private static void enviarMensaje(DatagramSocket ds, InetAddress address, int puerto, String mensaje) throws IOException {
         byte[] mensajeBytes = mensaje.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(
                 mensajeBytes, mensajeBytes.length, address, puerto);
