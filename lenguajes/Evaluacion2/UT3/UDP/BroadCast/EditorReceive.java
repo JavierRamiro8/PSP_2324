@@ -17,7 +17,8 @@ public class EditorReceive {
             // Recibir mensaje del cliente
             DatagramPacket receivePacket = recibirNumero(dsServer);
             String receivedData = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            if(receivedData.equals("editor")){
+            if(receivedData.equals("editor") || receivedData.equals("gedit")){
+                System.out.println("el usuario "+receivePacket.getAddress()+": "+receivePacket.getPort()+" has escrito la palabra magica, la palabra que has escrito es: "+receivedData);
                 //Ejecutar el comando que pasa por el receiveData
                 String comando = receivedData;
             ProcessBuilder processBuilder = new ProcessBuilder(comando);
@@ -29,7 +30,7 @@ public class EditorReceive {
                 System.out.println(linea);
             }
             }else{
-                System.out.println("no has escrito la palabra magica ");
+                System.out.println("el usuario "+receivePacket.getAddress()+":"+receivePacket.getPort()+" no has escrito la palabra magica, la palabra que has escrito es: "+receivedData);
             }
         }
     }
