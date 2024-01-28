@@ -11,7 +11,7 @@ import java.util.Enumeration;
 import java.util.Scanner;
 
 public class MulticastChatSend {
-      public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
 
             Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
@@ -33,13 +33,9 @@ public class MulticastChatSend {
             s.joinGroup(group, netIf);
             while (true) {
                 String msg = in.nextLine();
-                in.nextLine();
                 byte[] msgBytes = msg.getBytes();
                 DatagramPacket dp = new DatagramPacket(msgBytes, msgBytes.length, group);
                 s.send(dp);
-
-                // Lo dejo cuando quiera
-                s.leaveGroup(group, netIf);
             }
             /* Código de envío */
 

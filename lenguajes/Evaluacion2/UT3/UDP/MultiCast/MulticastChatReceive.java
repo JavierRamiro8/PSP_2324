@@ -36,8 +36,7 @@ public class MulticastChatReceive {
                 byte[] buf = new byte[1000];
                 DatagramPacket recv = new DatagramPacket(buf, buf.length);
                 s.receive(recv);
-                System.out.println(new String(recv.getData(), 0, recv.getLength()));
-                s.leaveGroup(group, netIf);   
+                System.out.println("El usuario con la IP:"+recv.getAddress()+" "+new String(recv.getData(), 0, recv.getLength()));  
             }
 
 		} catch (IOException e) {
