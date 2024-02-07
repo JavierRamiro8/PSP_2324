@@ -1,4 +1,4 @@
-package TCP.Prueba;
+package TCP.Ejercicios.Prueba;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
