@@ -18,9 +18,13 @@ public class Cliente {
                 String cadena = in.nextLine();
                 out.writeUTF(cadena);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                System.out.println(reader.readLine());
-                out.close();
-                socket.close();
+                String lector=reader.readLine();
+                System.out.println(lector);
+                if (!lector.equals(null) && lector.equalsIgnoreCase("salida")) {
+                    out.close();
+                    socket.close();
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
