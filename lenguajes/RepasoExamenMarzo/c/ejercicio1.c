@@ -21,8 +21,8 @@ El padre espera a que terminen los procesos y escribe quién ha encontrado el pr
 #include <time.h>
 #define NUMEROMAXGEN 100
 
-int contador1 = 0;
-int contador2 = 0;
+int contadorHijo1 = 0;
+int contadorHijo2 = 0;
 
 int esPrimo(int num)
 {
@@ -36,22 +36,16 @@ int esPrimo(int num)
     return 1;
 }
 
-void controladorSignal1(int signum)
+void controladorSignal1()
 {
-    if (signum == SIGUSR1)
-    {
-        contador1++;
-        printf("Hijo 1: Se encontró un número primo.\n");
-    }
+    contadorHijo1++;
+    printf("Hijo 1: Se encontró un número primo.\n");
 }
 
-void controladorSignal2(int signum)
+void controladorSignal2()
 {
-    if (signum == SIGUSR2)
-    {
-        contador2++;
-        printf("Hijo 2: Se encontró un número primo.\n");
-    }
+    contadorHijo2++;
+    printf("Hijo 2: Se encontró un número primo.\n");
 }
 
 int main(int argc, char const *argv[])
@@ -63,9 +57,6 @@ int main(int argc, char const *argv[])
 
     signal(SIGUSR1, controladorSignal1);
     signal(SIGUSR2, controladorSignal2);
-
-    pid_t hijo1;
-    pid_t hijo2;
     int pipeHijo1[2];
     if (pipe(pipeHijo1) != 0)
     {
@@ -79,13 +70,16 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    contador1 = 0;
-    contador2 = 0;
+    contadorHijo1 = 0;
+    contadorHijo2 = 0;
 
     write(pipeHijo1[1], &numeroRecibido, sizeof(int));
     write(pipeHijo2[1], &numeroRecibido, sizeof(int));
 
-    if ((hijo1 = fork()) != 0)
+    pid_t hijo1 = fork();
+    pid_t hijo2 = fork();
+
+    if (hijo1 == 0)
     {
         close(pipeHijo1[0]);
         int numerosGenerados[numeroRecibido];
@@ -105,8 +99,9 @@ int main(int argc, char const *argv[])
             }
         }
         close(pipeHijo1[1]);
+        exit(0);
     }
-    else if ((hijo2 = fork()) != 0)
+    else if (hijo2 == 0)
     {
         close(pipeHijo2[0]);
         int numerosGenerados[numeroRecibido];
@@ -126,14 +121,15 @@ int main(int argc, char const *argv[])
             }
         }
         close(pipeHijo2[1]);
+        exit(0);
     }
     else
     {
         waitpid(hijo1, NULL, 0);
         waitpid(hijo2, NULL, 0);
-        
-        printf("Número de primos encontrados por el Hijo 1: %d\n", contador1);
-        printf("Número de primos encontrados por el Hijo 2: %d\n", contador2);
+        printf("Número de primos encontrados por el Hijo 1: %d\n", contadorHijo1);
+        printf("Número de primos encontrados por el Hijo 2: %d\n", contadorHijo2);
     }
+
     return 0;
 }
